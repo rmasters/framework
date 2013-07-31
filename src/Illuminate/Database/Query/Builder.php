@@ -399,6 +399,37 @@ class Builder {
 	}
 
 	/**
+	 * Add a where not between statement to the query.
+	 *
+	 * @param  string  $column
+	 * @param  array   $values
+	 * @param  string  $boolean
+	 * @return \Illuminate\Database\Query\Builder|static
+	 */
+	public function whereNotBetween($column, array $values, $boolean = 'and')
+	{
+		$type = 'not between';
+
+		$this->wheres[] = compact('column', 'type', 'boolean');
+
+		$this->bindings = array_merge($this->bindings, $values);
+
+		return $this;
+	}
+
+	/**
+	 * Add an or where not between statement to the query.
+	 *
+	 * @param  string  $column
+	 * @param  array   $values
+	 * @return \Illuminate\Database\Query\Builder|static
+	 */
+	public function orWhereNotBetween($column, array $values)
+	{
+		return $this->whereNotBetween($column, $values, 'or');
+	}
+
+	/**
 	 * Add a nested where statement to the query.
 	 *
 	 * @param  \Closure $callback

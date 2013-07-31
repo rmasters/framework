@@ -100,6 +100,15 @@ class DatabaseQueryBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testWhereNotBetweens()
+	{
+		$builder = $this->getBuilder();
+		$builder->select('*')->from('users')->whereNotBetween('id', array(1, 2));
+		$this->assertEquals('select * from "users" where "id" not between ? and ?', $builder->toSql());
+		$this->assertEquals(array(0 => 1, 1 => 2), $builder->getBindings());
+	}
+
+
 	public function testBasicOrWheres()
 	{
 		$builder = $this->getBuilder();
